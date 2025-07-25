@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import QuizStart from './components/QuizStart';
+import Game from './components/Game';
 
 function App() {
   const [playerName, setPlayerName] = useState('');
@@ -16,7 +17,7 @@ function App() {
       {!quizStarted ? (
         <QuizStart onStart={handleStartQuiz} />
       ) : (
-        <h2>Quiz will go here... Hello, {playerName}!</h2>
+        <Game playerName={playerName} />
       )}
     </div>
   );
