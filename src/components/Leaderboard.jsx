@@ -13,7 +13,7 @@ const Leaderboard = () => {
       .catch(error => {
         console.error("Error loading leaderboard data:", error);
       });
-  }, []);
+  }, []); 
 
   return (
     <div style={{ textAlign: 'center', marginTop: '40px' }}>

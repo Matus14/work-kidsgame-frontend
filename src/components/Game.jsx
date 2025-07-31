@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 const Game = ({ playerName, onQuizEnd }) => {
   const [num1, setNum1] = useState(0);
@@ -9,10 +10,13 @@ const Game = ({ playerName, onQuizEnd }) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
-  const maxQuestions = 5;
+  const [maxQuestions] = useState(5);
+
+  const [startTime, setStartTime] = useState(Date.now());
 
   useEffect(() => {
     startNewGame();
+    setStartTime(Date.now());
   }, []);
 
   const startNewGame = () => {
@@ -26,21 +30,43 @@ const Game = ({ playerName, onQuizEnd }) => {
     const correct = num1 + num2;
     const answer = parseInt(userAnswer);
 
-    if (answer === correct) {
-      setIsCorrect(true);
-      setCorrectAnswers(prev => prev + 1);
-    } else {
-      setIsCorrect(false);
-      setIncorrectAnswers(prev => prev + 1);
-    }
+    const isAnswerCorrect = answer === correct;
+    setIsCorrect(isAnswerCorrect);
+
+    const updatedCorrect = isAnswerCorrect ? correctAnswers + 1 : correctAnswers;         
+    const updatedIncorrect = isAnswerCorrect ? incorrectAnswers : incorrectAnswers + 1;  
+    const updatedScore = updatedCorrect * 10;     
+
+    
 
     const nextCount = questionCount + 1;
     setQuestionCount(nextCount);
 
     if (nextCount >= maxQuestions) {
       setQuizFinished(true);
-      onQuizEnd(); 
+      
+      const endTime = Date.now();
+      const duration = Math.floor((endTime - startTime) / 1000);
+
+      axios.post('http://localhost:8080/api/results', {
+        playerName,
+        correctAnswer: updatedCorrect,
+        incorrectAnswer: updatedIncorrect,
+        durationSeconds: duration,
+        score: updatedScore,
+      })
+        .then(() => {
+          console.error('Failed to save quiz result:', error);
+        });
+      
+      setCorrectAnswers(updatedCorrect);
+      setIncorrectAnswers(updatedIncorrect);
+      
+
     } else {
+      setCorrectAnswers(updatedCorrect);
+      setIncorrectAnswers(updatedIncorrect);
+
       setTimeout(() => {
         startNewGame();
       }, 1000);
@@ -52,6 +78,7 @@ const Game = ({ playerName, onQuizEnd }) => {
     setIncorrectAnswers(0);
     setQuestionCount(0);
     setQuizFinished(false);
+    setStartTime(Date.now());
     startNewGame();
   };
 
@@ -84,7 +111,8 @@ const Game = ({ playerName, onQuizEnd }) => {
           <p>Correct Answers: {correctAnswers}</p>
           <p>Incorrect Answers: {incorrectAnswers}</p>
           <p>Your Score: {correctAnswers * 10} points</p>
-          <button onClick={resetGame}>Play Again</button>
+          <button onClick={resetGame} style={{marginRight: '100px'}}>Play Again</button>
+          <button onClick={onQuizEnd}>Show Leaderboard</button>
         </>
       )}
     </div>
