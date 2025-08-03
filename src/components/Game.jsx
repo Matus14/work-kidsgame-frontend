@@ -55,7 +55,7 @@ const Game = ({ playerName, onQuizEnd }) => {
         durationSeconds: duration,
         score: updatedScore,
       })
-        .then(() => {
+        .then((error) => {
           console.error('Failed to save quiz result:', error);
         });
       
