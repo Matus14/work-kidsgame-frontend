@@ -40,7 +40,7 @@ function App() {
       )}
 
       {/* If game ended, show Leaderboard */}
-      {showLeaderboard && <Leaderboard />}
+      {showLeaderboard && <Leaderboard onBack={() => setShowLeaderboard(false)} />}
     </div>
   );
 }

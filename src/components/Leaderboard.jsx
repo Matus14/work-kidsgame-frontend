@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Leaderboard = () => {
+const Leaderboard = ({onBack}) => {
   const [results, setResults] = useState([]);
 
   // Getting all results from the backend
@@ -47,6 +47,9 @@ const Leaderboard = () => {
           ))}
         </tbody>
       </table>
+      
+      <br/><br/>
+      <button onClick={onBack} >Back to Start</button>
     </div>
   );
 };
