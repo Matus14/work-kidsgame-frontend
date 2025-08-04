@@ -6,7 +6,7 @@ const Leaderboard = ({onBack}) => {
 
   // Getting all results from the backend
   useEffect(() => {
-    axios.get('http://localhost:8080/api/results') 
+    axios.get('http://localhost:8080/api/results/top') // Now calling top 10 results in descending order based on score
       .then(response => {
 
         /*saves the received data from the backend (array of results) 
