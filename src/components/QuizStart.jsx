@@ -42,6 +42,10 @@ function QuizStart({onStart}) {
           <option value={3}>Level 3 - Add/Subtract (0-30)</option>
           <option value={4}>Level 4 - Add/Subtract (0-50)</option>
           <option value={5}>Level 5 - Add/Subtract (0-100)</option>
+          <option value={6}>Level 6 - Multiply (0-10)</option>
+          <option value={7}>Level 7 - Multiply/Divide (1-10)</option>
+          <option value={8}>Level 8 - All ops (1-20)</option>
+          <option value={9}>Level 9 - All ops (1-50)</option>
       </select>
 
       <button onClick={handleStart}>Start</button>
