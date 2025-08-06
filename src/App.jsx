@@ -12,9 +12,13 @@ function App() {
   // When the games ends, this shows Leaderboard
   const [showLeaderboard, setShowLeaderboard] = useState(false); 
 
+  // The tracking of the selected level- by user
+  const [selectedLevel, setSelectedLevel] = useState(1);
+
 
   // This part is called when user click on "Start" button
-  const handleStartQuiz = (name) => {
+  const handleStartQuiz = (name,level) => {
+    setSelectedLevel(level) //Save the selected level
     setPlayerName(name); // Save the name
     setQuizStarted(true); // Show the Game component
     setShowLeaderboard(false); // Just in case it was visible before
@@ -36,7 +40,7 @@ function App() {
 
       {/*If game  started, show the Game component*/ }  
       {quizStarted && (
-        <Game playerName={playerName} onQuizEnd={handleQuizEnd} />
+        <Game playerName={playerName} selectedLevel={selectedLevel} onQuizEnd={handleQuizEnd}  />
       )}
 
       {/* If game ended, show Leaderboard */}

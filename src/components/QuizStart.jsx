@@ -4,6 +4,7 @@ function QuizStart({onStart}) {
 
   // This state holds the name the player types in
   const [playerName, setPlayerName] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState(1);
 
 
   // This starts the game, after validation (name cannot be empty)
@@ -12,8 +13,8 @@ function QuizStart({onStart}) {
       alert("Please enter your name!");
       return;
     } 
-    onStart(playerName) // Calls the parent function with the name
-  }
+    onStart(playerName, selectedLevel) // Send botth name and level
+  };
 
 
   // This is the screen shown when the app starts
@@ -30,9 +31,22 @@ function QuizStart({onStart}) {
       />
 
       <br /><br/>
+
+      <p>Select a difficulty level:</p>
+      <select 
+        value={selectedLevel}
+        onChange={(e) => setSelectedLevel(Number(e.target.value))}
+        >
+          <option value={1}>Level 1 - Add (0-10)</option>
+          <option value={2}>Level 2 - Add (0-20)</option>
+          <option value={3}>Level 3 - Add/Subtract (0-30)</option>
+          <option value={4}>Level 4 - Add/Subtract (0-50)</option>
+          <option value={5}>Level 5 - Add/Subtract (0-100)</option>
+      </select>
+
       <button onClick={handleStart}>Start</button>
     </div>
-  )
+  );
 
 }
 

@@ -2,8 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'; // Used to send results to backend
 
 
+// Use of the "configuration object" / >> OBJECT MAP << 
+// Just a list of level configs.
+// Each level has its own range of numbers and allowed operations.
+// We’ll use this when creating random questions based on the chosen level.
+const levelConfig = {
+  1: {min: 0, max: 10, operations: ['+']},
+  2: {min: 0, max: 20, operations: ['+']},
+  3: {min: 0, max: 30, operations: ['+']},
+  4: {min: 0, max: 50, operations: ['+' , '-']},
+  5: {min: 0, max: 100, operations: ['+' , '-']},
+  6: {min: 0, max: 10, operations: ['*'] },
+  7: {min: 1, max: 10, operations: ['*', '/'] },
+  8: {min: 1, max: 20, operations: ['+', '-', '*', '/'] },
+  9: {min: 1, max: 50, operations: ['+', '-', '*', '/'] },
+  // more could be added in a future
+}
+
+
 // The list of all states used in the game
-const Game = ({ playerName, onQuizEnd }) => {
+const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
@@ -15,6 +33,7 @@ const Game = ({ playerName, onQuizEnd }) => {
   const [maxQuestions] = useState(5);
   const [startTime, setStartTime] = useState(Date.now());
 
+  
 
   // This runs once at the beginning to start the first question
   useEffect(() => {
@@ -22,12 +41,36 @@ const Game = ({ playerName, onQuizEnd }) => {
     setStartTime(Date.now());
   }, []);
 
-
-
   // This function creates two random numbers for each round.
+  const generateQuestionByLevel = (level) => {
+  const config = levelConfig[level];
+  const min = config.min;
+  const max = config.max;
+  const operations = config.operations;
+
+  let num1 = Math.floor(Math.random() * (max - min + 1)) + min;
+  let num2 = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  // This is the way how to randomly choose from the array
+  const operation = operations[Math.floor(Math.random() * operations.length)];
+
+  // Special rule for division – make sure we get whole numbers
+  if (operation === '/') {
+    if (num2 === 0) num2 = 1; // avoid dividing by zero
+    num1 = num1 - (num1 % num2); // ensure num1 is divisible by num2 to make it easy
+  }
+
+  return { num1, num2, operation };
+};
+
+
+
+  
   const startNewGame = () => {
-    setNum1(Math.floor(Math.random() * 10));
-    setNum2(Math.floor(Math.random() * 10));
+    const {num1, num2, operation} = generateQuestionByLevel(level) // get random values based on level
+    setNum1(num1);
+    setNum2(num2);
+    setOperation(operation)
     setUserAnswer('');
     setIsCorrect(null);
   };
@@ -113,7 +156,7 @@ const Game = ({ playerName, onQuizEnd }) => {
       {!quizFinished ? (
         <>
           <h2>Question {questionCount + 1} of {maxQuestions}</h2>
-          <h3>What is {num1} + {num2}?</h3>
+          <h3>What is {num1} {operation} {num2}?</h3>
 
           <input
             type="number"
