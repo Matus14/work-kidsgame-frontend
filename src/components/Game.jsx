@@ -24,6 +24,7 @@ const levelConfig = {
 const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
+  const [operation, setOperation] = useState('+'); // #added state for operation selection
   const [userAnswer, setUserAnswer] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const [questionCount, setQuestionCount] = useState(0);
@@ -32,6 +33,7 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
   const [quizFinished, setQuizFinished] = useState(false);
   const [maxQuestions] = useState(5);
   const [startTime, setStartTime] = useState(Date.now());
+  const level = selectedLevel
 
   
 
