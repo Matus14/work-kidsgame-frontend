@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Leaderboard = () => {
+const Leaderboard = ({onBack}) => {
   const [results, setResults] = useState([]);
 
-  // Získanie výsledkov z backendu
+  // Getting all results from the backend
   useEffect(() => {
-    axios.get('http://localhost:8080/api/results') // napojenie na backend
+    axios.get('http://localhost:8080/api/results/top') // Now calling top 10 results in descending order based on score
       .then(response => {
-        setResults(response.data);
+
+        /*saves the received data from the backend (array of results) 
+        into the components state - it can be used for rendering the leaderboard table */
+        setResults(response.data); 
       })
       .catch(error => {
         console.error("Error loading leaderboard data:", error);
       });
   }, []); 
 
+
+  // The vizualization of the table - all results so far. 
   return (
     <div style={{ textAlign: 'center', marginTop: '40px' }}>
       <h2> Leaderboard</h2>
@@ -42,11 +47,14 @@ const Leaderboard = () => {
           ))}
         </tbody>
       </table>
+      
+      <br/><br/>
+      <button onClick={onBack} >Back to Start</button>
     </div>
   );
 };
 
-// CSS štýl pre bunky
+// CSS style for table cells
 const cellStyle = {
   border: '1px solid #ccc',
   padding: '8px 12px'
