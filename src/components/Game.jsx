@@ -81,9 +81,29 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
 
   // Function where the answer is checked, counter for correct/incorrect answers and also the point system for correct answers
   const checkAnswer = () => {
-    const correct = num1 + num2;
-    const answer = parseInt(userAnswer); 
+    let correct;
 
+
+    // Since I added more option for operators, the validation needed to be updated to match all options.
+    switch(operation) {
+      case '+':
+        correct = num1 + num2;
+        break;
+      case '-':
+        correct = num1 - num2;
+        break;
+      case '/':
+        correct = num1 / num2;
+        break;
+      case '*':
+        correct = num1 * num2;
+        break;
+      default:
+        correct = num1 + num2;
+    };
+    
+    
+    const answer = parseInt(userAnswer); 
     const isAnswerCorrect = answer === correct; // this variable stores the curret value of the mathematic operation
     setIsCorrect(isAnswerCorrect);
 
