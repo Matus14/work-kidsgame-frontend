@@ -1,0 +1,41 @@
+/* --- Global theme (no logic, only visuals) --- */
+
+/* Brand / accents - could be changed easily */
+:root{
+  --brand-1: #6366f1; 
+  --brand-2: #22c55e; 
+  --brand-3: #06b6d4; 
+
+}
+
+/* New backround colloring */
+html, body, #root { height: 100%; }
+body{
+  background:
+    radial-gradient(1200px 800px at 0% 0%, #eef2ff 0%, #e0e7ff 20%, #c7d2fe 40%, #a5b4fc 65%, #93c5fd 100%);
+  background-attachment: fixed;
+}
+
+/* Increse the card size */
+.card.glow{
+  border: 0;
+  border-radius: 1.25rem; /* ~rounded-4 */
+  box-shadow: 0 16px 40px rgba(0,0,0,.12);
+}
+
+/* The buttons are rounded */
+.btn-round{
+  border-radius: 999px;
+}
+
+/* Bigger buttons */
+.btn-lg{
+  padding-top: .9rem;
+  padding-bottom: .9rem;
+}
+
+/* Focus effect added arround buttons*/
+.form-control:focus, .form-select:focus{
+  box-shadow: 0 0 0 .25rem rgba(99, 102, 241, .2); /* indigo focus */
+  border-color: var(--brand-1);
+}
