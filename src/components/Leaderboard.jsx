@@ -24,11 +24,11 @@ const Leaderboard = ({onBack}) => {
     <div className="container py-5">
       <div className="row justify-content-center">
         <div className="col-12 col-lg-10">
-          <div className="card shadow-sm">
+          <div className="card shadow-lg glow">
             <div className="card-body">
               <div className="d-flex align-items-center mb-3">
                 <h2 className="h4 mb-0">Leaderboard</h2>
-                <button onClick={onBack} className="btn btn-outline-secondary btn-sm ms-auto">Back to Start</button>
+                <button onClick={onBack} className="btn btn-outline-secondary btn-sm btn-round ms-auto">Back to Start</button>
               </div>
 
               <div className="table-responsive">

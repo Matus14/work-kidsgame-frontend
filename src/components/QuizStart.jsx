@@ -23,7 +23,7 @@ function QuizStart({onStart}) {
     <div className="container py-5">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-5">
-          <div className="card shadow-sm">
+          <div className="card shadow-lg glow">
             <div className="card-body text-center">
               <h1 className="h3 mb-3">Welcome in a MathQuiz!</h1>
               <p className="text-muted mb-4">Please enter your name and choose a level.</p>
@@ -57,7 +57,7 @@ function QuizStart({onStart}) {
                 </select>
               </div>
 
-              <button onClick={handleStart} className="btn btn-success btn-lg">
+              <button onClick={handleStart} className="btn btn-success btn-lg btn-lg btn-round w-100">
                 Start
               </button>
             </div>

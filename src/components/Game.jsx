@@ -194,7 +194,7 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
 
                   <div className="d-flex justify-content-center gap-2 mt-3">
                     {/*  On click, this checks the user's answer */}
-                    <button onClick={checkAnswer} className="btn btn-success">Check</button>
+                    <button onClick={checkAnswer} className="btn btn-success btn-round">Check</button>
                   </div>
 
                   {/* feedback */}
@@ -217,8 +217,8 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
                   <p className="mb-4">Your Score: <span className="fw-bold">{correctAnswers * 10}</span> points</p>
 
                   <div className="d-flex justify-content-center gap-2">
-                    <button onClick={resetGame} className="btn btn-primary" style={{marginRight: '100px'}}>Play Again</button>  
-                    <button onClick={onQuizEnd} className="btn btn-outline-secondary">Show Leaderboard</button> 
+                    <button onClick={resetGame} className="btn btn-primary btn-round" style={{marginRight: '100px'}}>Play Again</button>  
+                    <button onClick={onQuizEnd} className="btn btn-outline-secondary btn-round">Show Leaderboard</button> 
                   </div>
                 </>
               )}
