@@ -168,54 +168,65 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
    
   /*The return below uses React Fragments (<> </>) to group multiple elements 
     without wrapping them in an extra <div>. */
-  return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+   return (
+    <div className="container py-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-8">
+          <div className="card shadow-sm">
+            <div className="card-body text-center">
 
-      {/* Conditional rendering using the ternary operator ( ? : ). 
-        If the quiz is not finished (!quizFinished), it shows the question screen.
-        Otherwise (quiz is finished), it shows the result screen.
-        This is a clean way to show different views in the same component based on state. */}
-      {!quizFinished ? (
-        <>
-          <h2>Question {questionCount + 1} of {maxQuestions}</h2>
-          <h3>What is {num1} {operation} {num2}?</h3>
+              {!quizFinished ? (
+                <>
+                  <h2 className="h4 mb-2">Question {questionCount + 1} of {maxQuestions}</h2>
+                  <h3 className="display-6 mb-3">
+                    What is <span className="fw-bold">{num1}</span> <span className="text-info">{operation}</span> <span className="fw-bold">{num2}</span>?
+                  </h3>
 
-          <input
-            type="number"
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-          />
+                  <div className="mx-auto" style={{maxWidth: 320}}>
+                    <input
+                      type="number"
+                      value={userAnswer}
+                      onChange={(e) => setUserAnswer(e.target.value)}
+                      className="form-control form-control-lg text-center"
+                      placeholder="Type your answer"
+                    />
+                  </div>
 
-          <br /><br />
+                  <div className="d-flex justify-content-center gap-2 mt-3">
+                    {/*  On click, this checks the user's answer */}
+                    <button onClick={checkAnswer} className="btn btn-success">Check</button>
+                  </div>
 
-          {/*  On click, this checks the user's answer */}
-          <button onClick={checkAnswer}>Check</button>
+                  {/* feedback */}
+                  {isCorrect !== null && (
+                    <p
+                      className={`mt-3 fw-semibold ${isCorrect ? 'text-success' : 'text-danger'}`}
+                      style={{ marginBottom: 0 }}
+                    >
+                      {isCorrect ? 'Correct!' : 'Incorrect'}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  {/* When the quiz is finished this part shows up - the results of the game */}
+                  <h2 className="h3 mb-3">Quiz Finished!</h2>
+                  <p className="mb-1">Player: <span className="fw-bold">{playerName}</span></p>
+                  <p className="mb-1">Correct Answers: <span className="fw-bold text-success">{correctAnswers}</span></p>
+                  <p className="mb-1">Incorrect Answers: <span className="fw-bold text-danger">{incorrectAnswers}</span></p>
+                  <p className="mb-4">Your Score: <span className="fw-bold">{correctAnswers * 10}</span> points</p>
 
+                  <div className="d-flex justify-content-center gap-2">
+                    <button onClick={resetGame} className="btn btn-primary" style={{marginRight: '100px'}}>Play Again</button>  
+                    <button onClick={onQuizEnd} className="btn btn-outline-secondary">Show Leaderboard</button> 
+                  </div>
+                </>
+              )}
 
-          {/* This is a conditional rendering using again the ternary operator ( ? : ).
-            It checks if 'isCorrect' is not null, and then shows feedback with color:
-            green = correct, red = incorrect.
-            This logic is clean and short thanks to the ternary operator.
-          */}
-          {isCorrect !== null && (
-            <p style={{ color: isCorrect ? 'green' : 'red' }}> 
-              {isCorrect ? 'Correct!' : 'Incorrect'}
-            </p>
-          )}
-        </>
-      ) : (
-        <>
-
-        {/* When the quiz is finished this part shows up - the results of the game */}
-          <h2>Quiz Finished!</h2>
-          <p>Player: {playerName}</p>
-          <p>Correct Answers: {correctAnswers}</p>
-          <p>Incorrect Answers: {incorrectAnswers}</p>
-          <p>Your Score: {correctAnswers * 10} points</p>
-          <button onClick={resetGame} style={{marginRight: '100px'}}>Play Again</button>  
-          <button onClick={onQuizEnd}>Show Leaderboard</button> 
-        </>
-      )}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

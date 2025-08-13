@@ -20,36 +20,50 @@ const Leaderboard = ({onBack}) => {
 
 
   // The vizualization of the table - all results so far. 
-  return (
-    <div style={{ textAlign: 'center', marginTop: '40px' }}>
-      <h2> Leaderboard</h2>
-      <table style={{ margin: '0 auto', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th style={cellStyle}>Name</th>
-            <th style={cellStyle}>Score</th>
-            <th style={cellStyle}>Correct</th>
-            <th style={cellStyle}>Incorrect</th>
-            <th style={cellStyle}>Duration (s)</th>
-            <th style={cellStyle}>Played At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {results.map((result, index) => (
-            <tr key={index}>
-              <td style={cellStyle}>{result.playerName}</td>
-              <td style={cellStyle}>{result.score}</td>
-              <td style={cellStyle}>{result.correctAnswer}</td>
-              <td style={cellStyle}>{result.incorrectAnswer}</td>
-              <td style={cellStyle}>{result.durationSeconds}</td>
-              <td style={cellStyle}>{new Date(result.playedAt).toLocaleString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      
-      <br/><br/>
-      <button onClick={onBack} >Back to Start</button>
+ return (
+    <div className="container py-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-10">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <div className="d-flex align-items-center mb-3">
+                <h2 className="h4 mb-0">Leaderboard</h2>
+                <button onClick={onBack} className="btn btn-outline-secondary btn-sm ms-auto">Back to Start</button>
+              </div>
+
+              <div className="table-responsive">
+                <table className="table table-striped table-hover align-middle mb-0">
+                  <thead className="table-dark">
+                    <tr>
+                      <th>Name</th>
+                      <th>Score</th>
+                      <th>Correct</th>
+                      <th>Incorrect</th>
+                      <th>Duration (s)</th>
+                      <th>Played At</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {results.map((result, index) => (
+                      <tr key={index}>
+                        <td>{result.playerName}</td>
+                        <td className="fw-bold">{result.score}</td>
+                        <td className="text-success">{result.correctAnswer}</td>
+                        <td className="text-danger">{result.incorrectAnswer}</td>
+                        <td>{result.durationSeconds}</td>
+                        <td>{new Date(result.playedAt).toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+
+          <div className="py-2" />
+        </div>
+      </div>
     </div>
   );
 };
