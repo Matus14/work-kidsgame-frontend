@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"; 
-import axios from 'axios'; // Used to send results to backend
+import api from '../api'; // Used to send results to backend (update from base axios was made)
 
 
 // Use of the "configuration object" / >> OBJECT MAP << 
@@ -126,14 +126,14 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
       const endTime = Date.now(); 
       const duration = Math.floor((endTime - startTime) / 1000); // Game duration in seconds
 
-      axios.post('http://localhost:8080/api/results', { // sending data to database via axios
+      api.post('/api/results', { //  sending data via central API instance (api.js)
         playerName,
         correctAnswer: updatedCorrect,
         incorrectAnswer: updatedIncorrect,
         durationSeconds: duration,
         score: updatedScore,
       })
-        .then((error) => { // in case there is an error, this part of code hanle it
+        .catch((error) => { // in case there is an error, this part of code hanle it
           console.error('Failed to save quiz result:', error);
         });
       

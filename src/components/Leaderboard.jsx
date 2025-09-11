@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 const Leaderboard = ({onBack}) => {
   const [results, setResults] = useState([]);
 
   // Getting all results from the backend
   useEffect(() => {
-    axios.get('http://localhost:8080/api/results/top') // Now calling top 10 results in descending order based on score
+    api.get('/api/results/top') // Now calling top 10 results in descending order based on score
       .then(response => {
 
         /*saves the received data from the backend (array of results) 
