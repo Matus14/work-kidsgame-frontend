@@ -80,7 +80,7 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
 
 
   // Function where the answer is checked, counter for correct/incorrect answers and also the point system for correct answers
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
     let correct;
 
 
@@ -126,17 +126,18 @@ const Game = ({ playerName, selectedLevel ,onQuizEnd }) => {
       const endTime = Date.now(); 
       const duration = Math.floor((endTime - startTime) / 1000); // Game duration in seconds
 
-      api.post('/api/results', { //  sending data via central API instance (api.js)
-        playerName,
-        correctAnswer: updatedCorrect,
-        incorrectAnswer: updatedIncorrect,
-        durationSeconds: duration,
-        score: updatedScore,
-      })
-        .catch((error) => { // in case there is an error, this part of code hanle it
-          console.error('Failed to save quiz result:', error);
+      try {
+        await api.post("/api/results", {
+          playerName,
+          correctAnswer: updatedCorrect,
+          incorrectAnswer: updatedIncorrect,
+          durationSeconds: duration,
+          score: updatedScore,
         });
-      
+      } catch (error) {
+        console.error("Failed to save quiz result:", error);
+      }
+
       setCorrectAnswers(updatedCorrect);  
       setIncorrectAnswers(updatedIncorrect); 
       

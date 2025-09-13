@@ -3,20 +3,48 @@ import api from '../api';
 
 const Leaderboard = ({onBack}) => {
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(true);
+  
+ useEffect(() => {
+    let isMounted = true; // simple guard to avoid setState after unmount
 
-  // Getting all results from the backend
-  useEffect(() => {
-    api.get('/api/results/top') // Now calling top 10 results in descending order based on score
-      .then(response => {
+    const fetchResults = async () => {
+      try {
+        const res = await api.get("/api/results/top");
+        if (isMounted) setResults(res.data);
+      } catch (err) {
+        console.error("Error loading leaderboard data:", err);
+        if (isMounted) setError("Failed to load leaderboard");
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
 
-        /*saves the received data from the backend (array of results) 
-        into the components state - it can be used for rendering the leaderboard table */
-        setResults(response.data); 
-      })
-      .catch(error => {
-        console.error("Error loading leaderboard data:", error);
-      });
-  }, []); 
+    fetchResults();
+    return () => { isMounted = false; };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="container py-5 text-center">
+        <p>Loading leaderboard…</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container py-5 text-center">
+        <p className="text-danger">{error}</p>
+        <button onClick={onBack} className="btn btn-outline-secondary btn-sm btn-round mt-3">
+          Back to Start
+        </button>
+      </div>
+    );
+  }
+
+
 
 
   // The vizualization of the table - all results so far. 
